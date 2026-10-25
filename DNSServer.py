@@ -158,9 +158,7 @@ def run_dns_server():
                     qname = question.name.to_text().lower()
                     qtype = question.rdtype
 
-                    if qname not in dns_records:
-                        response.set_rcode(dns.rcode.NXDOMAIN)
-                    elif qtype in dns_records[qname]:
+                    if qname in dns_records and qtype in dns_records[qname]:
                         answer_data = dns_records[qname][qtype]
                         rrset = dns.rrset.RRset(
                             question.name, dns.rdataclass.IN, qtype
@@ -200,3 +198,4 @@ def run_dns_server_user():
 
 if __name__ == "__main__":
     run_dns_server_user()
+
